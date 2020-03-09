@@ -1,0 +1,101 @@
+﻿.p1{
+color:black;
+font-size:medium;
+width:550px;
+float:left;
+padding-top:50px;
+padding-left:5px;
+padding-bottom:40px;
+font:Arial;
+font-style:oblique;
+}
+.img2
+{
+padding-left:5px;
+padding-top:15px;
+}
+.img1
+{
+padding-left:5px;
+padding-top:50px;
+	float:right;
+}
+p{
+color:black;
+font-size:medium;
+width:550px;
+float:right;
+padding-right:10px;
+border:#FFCCFF;
+font:Arial;
+font-style:oblique;}
+img{
+padding-left:10px;
+padding-top:15px;
+	float:left;
+	border-style:solid;
+	border-width:5px;
+	border-bottom-color:green;border-left-color:orange;border-right-color:maroon;}
+.navigation{
+font-size:medium;
+padding-left:30px;
+background-color:#FFFFCC;}
+div.background{
+width:auto;
+padding:5px;
+margin-left:50px;
+margin-right:50px;
+background-color: #FFFFFF;}
+body{
+	background-color:#FBF5E6;
+}
+.top {
+	color: black;
+	margin: 10px;
+	height:90px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:xx-large;
+	border:5px solid #F6F9ED;
+	text-align:center;
+	padding:10px;
+	background-image:url('images/mess.jpg');
+}
+#wrapper{
+	width=auto;height:auto;
+	float:left;
+}
+a:hover {color: #28E;}
+a{
+	text-decoration:none;
+	color:black;
+}
+.table
+{
+background:#333;
+}
+.table ul
+{
+float:left;
+margin:0;
+padding:0;
+}
+.table ul li
+{
+list-style:none;
+padding:10px 20px;
+}
+.table ul li.title
+{
+font-weight:bold;
+background:#B9D3EE;
+color:#fff;
+}
+.table ul li.even
+{
+background:#fff
+}
+.table ul li.odd
+{
+background:#FFFFE6
+}
+

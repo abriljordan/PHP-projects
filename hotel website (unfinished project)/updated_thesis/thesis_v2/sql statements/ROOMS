@@ -1,0 +1,13 @@
+ROOMS AVAILABLE
+CREATE OR REPLACE VIEW rooms_available AS 
+ SELECT room.roomno AS roomnum, room.id
+   FROM room
+   LEFT JOIN rooms_reserved ON room.roomno = rooms_reserved.room_id
+  WHERE rooms_reserved.room_id IS NULL;
+  
+  ROOMS  RESERVED
+  CREATE OR REPLACE VIEW rooms_reserved AS 
+ SELECT room_booking.roomid AS room_id, room_booking.date_booking_from, room_booking.date_booking_to
+   FROM roombooking room_booking
+  WHERE room_booking.date_booking_from IS NOT NULL AND room_booking.date_booking_to IS NOT NULL
+  ORDER BY room_booking.roomid;

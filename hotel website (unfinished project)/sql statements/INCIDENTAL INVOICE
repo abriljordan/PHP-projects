@@ -1,0 +1,91 @@
+INCIDENTAL INVOICE //
+
+SELECT room.room_number|| ' ' ||roomtype.roomtype as room,guest.first_name|| ' ' ||guest.last_name AS guestname, 
+
+CREATE VIEW view_transact AS
+SELECT CONCAT(room.room_number,'--' ,roomtype.roomtype) as room,CONCAT(guest.first_name, SPACE(1) ,guest.last_name) AS guestname, 
+	 booking.check_in_date, booking.check_out_date,
+	(((booking.check_out_date - booking.check_in_date) + 1) * rate.rate) + sum(tmp_transact_charges_tbl.amount) as total
+FROM booking 
+JOIN guest ON booking.guest_id = guest.id 
+JOIN  tmp_transact_charges_tbl ON  guest.id = tmp_transact_charges_tbl.guest_id
+JOIN room ON room.id = booking.room_id
+JOIN  roomtype ON roomtype.id = room.roomtype_id 
+JOIN rate ON roomtype.rate_id = rate.id 
+GROUP BY room, first_name, last_name, check_in_date, check_out_date, rate
+
+CREATE VIEW total_payments AS
+SELECT sum(tmp_transact_payments_tbl.amount) as total_payments, guest.first_name
+FROM guest
+JOIN tmp_transact_payments_tbl ON tmp_transact_payments_tbl.guest_id = guest.id
+GROUP BY guest.first_name, tmp_transact_payments_tbl.guest_id
+ORDER BY guest_id
+
+CREATE VIEW total_charges AS
+SELECT sum(tmp_transact_charges_tbl.amount) as total_charges, guest.first_name|| ' ' || guest.last_name as guestname
+FROM guest
+JOIN tmp_transact_charges_tbl ON guest.id = tmp_transact_charges_tbl.guest_id
+GROUP BY guest.first_name,  tmp_transact_charges_tbl.guest_id, guest.last_name
+ORDER by guest_id
+
+TOTAL CHARGES
+CREATE VIEW view_total_charges AS
+SELECT CONCAT(roomtype.roomtype, SPACE(2),room.room_number as room), 
+  CONCAT(guest.first_name, SPACE(1) ,guest.last_name) as guestname, booking.check_in_date, booking.check_out_date,
+  ((booking.check_out_date - booking.check_in_date) + 1) * rate + sum(tmp_transact_charges_tbl.amount) as total_charges
+FROM tmp_transact_charges_tbl
+JOIN guest ON   guest.id = tmp_transact_charges_tbl.guest_id 
+JOIN booking ON   booking.guest_id = guest.id 
+JOIN room ON   room.id = booking.room_id 
+JOIN roomtype ON  roomtype.id = room.roomtype_id 
+JOIN rate ON rate.id = roomtype.rate_id
+GROUP BY rate, roomtype.roomtype, room.room_number,  guest.first_name, guest.last_name, booking.check_out_date, booking.check_in_date,  guest.id
+ORDER BY guest.id
+
+TOTAL PAYMENTS
+CREATE VIEW view_total_payments AS
+ SELECT CONCAT(roomtype.roomtype, SPACE(2) ,room.room_number) AS room, CONCAT(guest.first_name, SPACE(1) ,guest.last_name) AS guestname, booking.check_in_date, booking.check_out_date, sum(tmp_transact_payments_tbl.amount) AS total_payments
+   FROM tmp_transact_payments_tbl
+   JOIN guest ON guest.id = tmp_transact_payments_tbl.guest_id
+   JOIN booking ON booking.guest_id = guest.id
+   JOIN room ON room.id = booking.room_id
+   JOIN roomtype ON roomtype.id = room.roomtype_id
+   JOIN rate ON rate.id = roomtype.rate_id
+  GROUP BY rate.rate, roomtype.roomtype, room.room_number, guest.first_name, guest.last_name, booking.check_out_date, booking.check_in_date, guest.id
+  ORDER BY guest.id;
+
+CREATE VIEW view_balance AS 
+ SELECT view_total_payments.guestname, view_total_charges.check_in_date, view_total_charges.check_out_date, view_total_payments.room,
+  view_total_charges.total_charges - view_total_payments.total_payments AS balance
+   FROM view_total_payments
+   JOIN view_total_charges ON view_total_payments.guestname = view_total_charges.guestname;
+   
+ FINAL VIEW OF BALANCE
+ CREATE VIEW view_final_balance AS
+ SELECT 
+   view_balance.room, view_balance.guestname, view_balance.check_in_date, view_balance.check_out_date, view_total_charges.total_charges, view_total_payments.total_payments, view_balance.balance
+FROM view_balance,
+  view_total_charges,
+  view_total_payments
+WHERE 
+  view_total_charges.guestname = view_total_payments.guestname AND
+  view_total_charges.room = view_total_payments.room AND
+  view_total_charges.check_in_date = view_total_payments.check_in_date AND
+  view_total_charges.check_out_date = view_total_payments.check_out_date AND
+  view_total_payments.guestname = view_balance.guestname AND
+  view_total_payments.room = view_balance.room AND
+  view_total_payments.check_in_date = view_balance.check_in_date AND
+  view_total_payments.check_out_date = view_balance.check_out_date;
+
+ //TOTAL ROOM CHARGE FOR CI PRINTING
+SELECT 
+  --rate.id, roomtype.rate_id, roomtype.id, room.roomtype_id, room.id, booking.room_id, booking.guest_id, 
+  guest.id as "Guest ID", guest.first_name|| ' ' ||guest.last_name as "Guest Name", guest.email_address, guest.phone_number, 
+  guest.address, room.room_number, roomtype.roomtype, rate.rate,  booking.check_in_date, booking.check_out_date,
+	--computation
+	((booking.check_out_date - booking.check_in_date) + 1) * rate as "Total Room Charge"
+FROM guest 
+JOIN booking ON booking.guest_id = guest.id 
+JOIN room ON room.id = booking.room_id 
+JOIN roomtype ON roomtype.id = room.roomtype_id
+JOIN rate ON rate.id = roomtype.rate_id 

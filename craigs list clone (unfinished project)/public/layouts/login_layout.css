@@ -1,0 +1,9 @@
+
+<div class = "login">
+			Username:
+		      <input type="text" name="username" maxlength="10" value="<?php //echo htmlentities($username); ?>" />
+		    Password:
+		      <input type="password" name="password" maxlength="10" value="<?php //echo htmlentities($password); ?>" />
+		    <input type="submit" name="submit" value="Login" />
+			</ul>
+</div>

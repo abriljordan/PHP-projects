@@ -1,0 +1,35 @@
+index.php
+<h1><a href='pdf.php' target='_blank'>Click here to generate PDF</a></h1>
+
+
+
+pdf.php
+<?php
+include "dbcon.php";
+require('fpdf.php');
+
+$pdf=new FPDF();
+$pdf->AddPage();
+
+$pdf->SetFont('Arial','B',10);
+
+$pdf->Cell(50,3,"Cool PHP to PDF Tutorial by WebSpeaks.in");
+$pdf->Ln();
+$pdf->Ln();
+
+$pdf->SetFont('Arial','B',6);
+$pdf->Cell(10,5,"Sr.no.");
+$pdf->Cell(350,5,"Message");
+$pdf->Ln();
+$pdf->Cell(450,3,"-------------------------------------------------------------------------------------");
+
+	// Get data records from table.
+	$result=mysql_query("select * from records order by msg_id");
+	while($row=mysql_fetch_array($result))
+	{
+		$pdf->Cell(10,5,"{$row['msg_id']}");
+		$pdf->MultiCell(350,5,"{$row['message']}");
+	}
+$pdf->Output();
+
+?>

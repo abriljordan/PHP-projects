@@ -1,0 +1,12 @@
+2012/01/08 17:24:32 Starting cygwin install, version 2.674
+2012/01/08 17:24:32 io_stream_cygfile: fopen(/etc/setup/last-cache) failed 2 No such file or directory
+2012/01/08 17:24:32 io_stream_cygfile: fopen(/etc/setup/net-method) failed 2 No such file or directory
+2012/01/08 17:24:32 io_stream_cygfile: fopen(/etc/setup/net-proxy-host) failed 2 No such file or directory
+2012/01/08 17:24:32 io_stream_cygfile: fopen(/etc/setup/net-proxy-port) failed 2 No such file or directory
+2012/01/08 17:24:32 io_stream_cygfile: fopen(/etc/setup/extrakeys) failed 2 No such file or directory
+2012/01/08 17:24:32 io_stream_cygfile: fopen(/etc/setup/chooser_window_settings) failed 2 No such file or directory
+2012/01/08 17:24:32 Current Directory: C:\wamp\www\thesis\public\admin
+2012/01/08 17:24:32 User has backup/restore rights
+2012/01/08 17:24:32 Changing gid to Administrators
+2012/01/08 17:24:32 Could not open service McShield for query, start and stop. McAfee may not be installed, or we don't have access.
+2012/01/08 17:24:36 Ending cygwin install

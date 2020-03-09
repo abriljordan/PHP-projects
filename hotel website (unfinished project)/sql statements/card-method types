@@ -1,0 +1,74 @@
+<!--CARD TYPE TAB-->
+		<div title="Card Type"  closable="false" style="padding:20px;">
+	<!--start of content of TAB -->
+<table width="600" height="300" class="easyui-datagrid" id="dg5" style="width:600px; height:300px" 
+title="Card Type" url="../crud_php/card_type_crud/get_card_type.php" toolbar="#toolbar5" rownumbers="true" fitColumns="true" singleSelect="true">
+		<thead>
+			<tr>
+				<th width="50" nowrap field="card_type">Card Type</th>
+				<th width="50" nowrap field="description">Description</th>
+				</tr>
+		</thead>
+	</table>
+	<div id="toolbar5">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onClick="addCardType()">Add Card Type</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onClick="editCardType()">Edit Card Type</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onClick="removeCardType()">Remove Card Type</a>
+	</div>
+	<div id="dlg5" class="easyui-dialog" style="width:400px; height:400px; padding:10px 20px" closed="true" buttons="#dlg-buttons">
+		<div class="ftitle">Card Type</div>
+		<form id="fm5" method="post">
+			<div class="fitem">
+				<label>Card Type:</label>
+				<input name="card_type" required></input>
+			</div>
+			<div class="fitem">
+				<label>Description:</label>
+				<input name="description" ></input>
+			</div>
+		</form>
+	</div>
+	<div id="dlg-buttons">
+<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveCardType()">Save</a>
+<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg5').dialog('close')">Cancel</a>
+	</div>
+	<!--end of content -->
+		</div> <!-- end of TAB CARD TYPE -->	
+		
+		
+		<!--PAYMENT Method TAB-->
+		<div title="Payment Method"  closable="false" style="padding:20px;">
+	<!--start of content of TAB -->
+<table width="600" height="300" class="easyui-datagrid" id="dg4" style="width:600px; height:300px" 
+title="Payment Method" url="../crud_php/payment_method_crud/get_payment_method.php" toolbar="#toolbar4" rownumbers="true" fitColumns="true" singleSelect="true">
+		<thead>
+			<tr>
+				<th width="50" nowrap field="payment_method">Payment Method</th>
+				<th width="50" nowrap field="description">Description</th>
+				</tr>
+		</thead>
+	</table>
+	<div id="toolbar4">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onClick="addPaymentMethod()">Add Payment Method</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onClick="editPaymentMethod()">Edit Payment Method</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onClick="removePaymentMethod()">Remove Payment Method</a>
+	</div>
+	<div id="dlg4" class="easyui-dialog" style="width:400px; height:400px; padding:10px 20px" closed="true" buttons="#dlg-buttons">
+		<div class="ftitle">Payment Method</div>
+		<form id="fm4" method="post">
+			<div class="fitem">
+				<label>Payment Method:</label>
+				<input name="payment_method" required></input>
+			</div>
+			<div class="fitem">
+				<label>Description:</label>
+				<input name="description" ></input>
+			</div>
+		</form>
+	</div>
+	<div id="dlg-buttons">
+<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="savePaymentMethod()">Save</a>
+<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg4').dialog('close')">Cancel</a>
+	</div>
+	<!--end of content -->
+		</div> <!-- end of TAB facility -->		

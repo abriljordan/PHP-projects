@@ -1,0 +1,61 @@
+CREATE VIEW view_room_roomtype AS
+SELECT room.id AS room_id, room.roomtype_id AS roomtype_number , CONCAT(room.room_number, '--' ,roomtype.roomtype) AS room
+FROM room
+JOIN roomtype ON roomtype.id = room.roomtype_id
+WHERE roomtype.id = room.roomtype_id ;
+
+
+CREATE VIEW view_housekeeping AS
+SELECT housekeeping.description as work_order,housekeeping_category.description AS category,room.room_number,
+housekeeping_priority.description AS priority, 
+housekeeping.start_date, housekeeping.end_date, users.nickname, housekeeping_status.description AS status
+FROM housekeeping
+ JOIN housekeeping_category   ON housekeeping.category_id = housekeeping_category.id 
+ JOIN housekeeping_priority ON  housekeeping.priority_id = housekeeping_priority.id 
+ JOIN housekeeping_status ON  housekeeping_status.id = housekeeping.status_id 
+ JOIN room ON  room.id = housekeeping.room_id
+ JOIN users  ON housekeeping.user_id = users.id 
+ 
+ //INVOICE TRANSACTIONS
+--SELECT CONCAT(room.room_number,SPACE(2) ,roomtype.roomtype) as room,CONCAT(guest.first_name, SPACE(1) ,guest.last_name) AS guestname, 
+--SELECT room.room_number|| ' ' ||roomtype.roomtype as room,guest.first_name|| ' ' ||guest.last_name AS guestname, 
+
+CREATE VIEW view_transact AS
+SELECT CONCAT(room.room_number,'--' ,roomtype.roomtype) as room,CONCAT(guest.first_name, SPACE(1) ,guest.last_name) AS guestname, 
+CREATE VIEW view_transact AS
+
+SELECT CONCAT(room.room_number,'--' ,roomtype.roomtype) as room,CONCAT(guest.first_name, SPACE(1) ,guest.last_name) AS guestname, 
+
+
+SELECT room.room_number|| ' ' ||roomtype.roomtype as room,guest.first_name|| ' ' ||guest.last_name AS guestname, 
+	 booking.check_in_date, booking.check_out_date,
+	((booking.check_out_date - booking.check_in_date) + 1) * rate.rate AS total,
+	--(((booking.check_out_date - booking.check_in_date) + 1) * rate.rate - sum(tmp_transact_tbl.amount)) as balance
+FROM booking 
+JOIN guest ON booking.guest_id = guest.id 
+JOIN  tmp_transact_tbl ON  guest.id = tmp_transact_tbl.guest_id
+JOIN room ON room.id = booking.room_id
+JOIN  roomtype ON roomtype.id = room.roomtype_id 
+JOIN rate ON roomtype.rate_id = rate.id 
+GROUP BY room, first_name, last_name, check_in_date, check_out_date, rate
+
+*********UNBOOKED PERIODS OF A PARTICULAR ROOM
+--unbooked periods of rooms, availability
+create view view_room_availability_periods as
+ SELECT CONCAT(room.room_number, '--', roomtype.roomtype) as room, a.check_out_date AS 'available from', min(b.check_in_date) AS 'available to'
+   FROM booking a
+   JOIN booking b ON a.room_id = b.room_id AND a.check_out_date < b.check_in_date
+   JOIN room ON a.room_id = room.id
+   JOIN roomtype ON room.roomtype_id = roomtype.id
+  GROUP BY a.check_out_date, a.room_id,  room.room_number, roomtype.roomtype
+ HAVING a.check_out_date < min(b.check_in_date)
+  ORDER BY a.room_id;
+  
+  
+  --booked periods
+  CREATE VIEW view_booked_periods AS
+   SELECT CONCAT(room.room_number,SPACE(1),roomtype.roomtype) AS room, booking.check_in_date AS 'booked from', booking.check_out_date AS 'booked to'
+   FROM booking
+   JOIN room ON room.id = booking.room_id
+   JOIN roomtype ON roomtype.id = room.roomtype_id
+  ORDER BY room.id;
